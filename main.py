@@ -1,21 +1,23 @@
 from worlds import World2D
 from renders import ConsoleRender
 from simulation import Simulation
+
+from position import Position
 from sprites import ConsoleTextSpriteMap
-from entities import Tree, Rock, Grass, Entity
+from entities import Tree, Rock, Grass
 
 from config import WORLD_WIDTH, WORLD_HEIGHT
 
+world = World2D(WORLD_WIDTH, WORLD_HEIGHT)
+world.add_entity(Grass(), Position(2, 2))
+world.add_entity(Rock(), Position(3, 6))
+world.add_entity(Tree(), Position(5, 8))
+world.add_entity(Rock(), Position(2, 8))
+
 
 simulation = Simulation(
-    world=World2D(WORLD_WIDTH, WORLD_HEIGHT),
+    world=world,
     render=ConsoleRender(ConsoleTextSpriteMap()),
 )
 
 simulation.next_turn()
-
-
-print(type(Rock))
-print(issubclass(Rock, Entity))
-print(Rock.__name__)
-input(">>> Type ENTER for exit...")
