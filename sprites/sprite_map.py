@@ -39,11 +39,11 @@ class ConsoleTextSpriteMap(SpriteMap):
     def __init__(self):
         self._sprite_map = CONSOLE_TEXT_SPRITES
 
-    def get_sprite(self, sprite_type: 'Entity') -> 'Sprite':
+    def get_sprite(self, entity: 'Entity') -> 'Sprite':
         # WARNING: возможно получать спрайт по имени класса не лучшая идея
-        data = self._sprite_map.get(sprite_type.__name__)
+        data = self._sprite_map.get(str(entity))
 
         return ConsoleTextSprite(data)
 
     def get_empty_sprite(self) -> 'Sprite':
-        return self.get_sprite(Empty)
+        return self.get_sprite(Empty())

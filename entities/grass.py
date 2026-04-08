@@ -2,4 +2,5 @@ from .entity import Entity
 
 
 class Grass(Entity):
-    pass
+    def __init__(self):
+        pass

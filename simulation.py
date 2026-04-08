@@ -17,11 +17,11 @@ class Simulation():
     def next_turn(self):
         self._move_counter += 1
         self._render.render(self._world)
-        time.sleep(1)
 
     def start_simulation(self):
         while True:
             self.next_turn()
+            time.sleep(1)
 
     def pause_simulation(self):
         pass
