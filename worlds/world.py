@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, List, Dict, Tuple
 
 if TYPE_CHECKING:
-    from entity import Entity
+    from entities import Entity
     from position import Position
 
 
@@ -26,6 +26,10 @@ class World(ABC):
 
     @abstractmethod
     def get_entity_position(self, entity: 'Entity') -> 'Position':
+        pass
+
+    @abstractmethod
+    def get_empty_positions(self) -> List['Position']:
         pass
 
     @abstractmethod
