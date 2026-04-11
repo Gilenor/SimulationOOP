@@ -9,10 +9,16 @@ class Position(object):
     def __str__(self) -> str:
         return f"x: {self._x}, y: {self._y}"
 
+    def __repr__(self) -> str:
+        return str(self)
+
     def __eq__(self, value: object) -> bool:
-        if not isinstance(value, Position):
-            return NotImplemented
-        return self.get_coords() == value.get_coords()
+        if isinstance(value, Position):
+            return self.get_coords() == value.get_coords()
+        if isinstance(value, Tuple):
+            return self.get_coords() == value
+
+        return NotImplemented
 
     def __hash__(self) -> int:
         return hash(self.get_coords())
@@ -20,8 +26,10 @@ class Position(object):
     def get_coords(self) -> Tuple:
         return (self._x, self._y)
 
+    @property
+    def x(self) -> int:
+        return self._x
 
-pos1 = Position(1, 1)
-pos2 = Position(1, 1)
-
-print(pos1 == pos2)
+    @property
+    def y(self) -> int:
+        return self._y
