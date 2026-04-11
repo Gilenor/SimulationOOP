@@ -1,4 +1,4 @@
-from entity import Entity
+from entities import Entity
 from abc import abstractmethod
 
 

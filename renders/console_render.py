@@ -43,7 +43,7 @@ class ConsoleView:
     def add_entity_to_view(self, entity: 'Entity', position: 'Position'):
         # сущность будет просто добавляться на указанную позицию
         # если там уже была сущность, то новая будет добавляться поверх нее
-        x, y = position.get_coords()
+        x, y, *_ = position.get_coords()
         sprite = self._sprite_map.get_sprite(entity)
         # WARNING: пока все текстовы/консольные спрайты шириной в один символ
         #          но если это измениться то будет ошибка!!!
