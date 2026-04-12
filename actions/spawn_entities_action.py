@@ -19,6 +19,7 @@ class SpawnEntitiesAction(Action):
         for i in range(self.count):
             free_positions = world.get_empty_positions()
 
+            # нужно ли выбрасывать исключение?
             if not free_positions:
                 return
 

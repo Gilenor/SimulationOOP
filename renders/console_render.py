@@ -22,6 +22,7 @@ class ConsoleRender(Render):
             view.add_entity_to_view(entity, position)
 
         print(view)
+        print()
         del view
 
 

@@ -8,9 +8,5 @@ if TYPE_CHECKING:
 
 class Action(ABC):
     @abstractmethod
-    def __init__(self):
-        pass
-
-    @abstractmethod
     def execute(self, game_map: 'World'):
         pass

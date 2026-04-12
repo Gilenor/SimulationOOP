@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from typing import TYPE_CHECKING, List, Dict, Tuple
+from typing import TYPE_CHECKING, List, Dict, Tuple, Type
 
 if TYPE_CHECKING:
     from entities import Entity
@@ -21,7 +21,7 @@ class World(ABC):
         pass
 
     @abstractmethod
-    def get_entities(self) -> List['Entity']:
+    def get_entities(self, entity_type: Type | None) -> List['Entity']:
         pass
 
     @abstractmethod
