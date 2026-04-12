@@ -1,8 +1,7 @@
 import config
 
 from typing import TYPE_CHECKING, Callable
-from entities import Tree, Rock, Grass
-from creatures import Predator, Herbivore
+from entities import Tree, Rock, Grass, Predator, Herbivore
 
 if TYPE_CHECKING:
     from entities import Entity
