@@ -21,7 +21,7 @@ class World(ABC):
         pass
 
     @abstractmethod
-    def get_entities(self, entity_type: Type | None) -> List['Entity']:
+    def get_entities(self, entity_type: Type | None=None) -> List['Entity']:
         pass
 
     @abstractmethod

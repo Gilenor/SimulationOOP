@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from worlds import World
     from entities import Entity
     from position import Position
-    from sprites import SpriteMap
+    from .sprites import SpriteMap
 
 
 class ConsoleRender(Render):

@@ -3,8 +3,8 @@ from renders import ConsoleRender
 from simulation import Simulation
 
 from position import Position
-from sprites import ConsoleTextSpriteMap
 from entities import Tree, Rock, Grass
+from renders.sprites import ConsoleTextSpriteMap
 
 from config import WORLD_WIDTH, WORLD_HEIGHT
 
