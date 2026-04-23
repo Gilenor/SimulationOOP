@@ -1,6 +1,6 @@
-from ..entity import Entity
+from .static_entity import StaticEntity
 
 
-class Rock(Entity):
+class Rock(StaticEntity):
     def __init__(self):
         pass
