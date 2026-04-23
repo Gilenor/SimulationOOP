@@ -2,14 +2,18 @@ from .creature import Creature
 
 from src.worlds import World
 from src.entities.static import Grass
-from src.utils.path_finder import PathFinder
+from src.entities.entity import Entity
 
 
 class Herbivore(Creature):
-    _targets = [Grass]
+    _targets = (Grass,)
 
     def __init__(self, health: int, speed: int):
         super().__init__(health, speed)
 
-    def make_move(self, world: World):
-        super().make_move(world)
+    def interact_with_target(self, target: Entity, world: World):
+        if not isinstance(target, self._targets):
+            print(f"Error: {target} id not valid type target for Herbivore")
+            return
+
+        target.hit()
