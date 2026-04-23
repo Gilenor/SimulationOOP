@@ -12,7 +12,7 @@ class EntityFactory(ABC):
     _INIT_PARAMS = {}
 
     @abstractmethod
-    def __init__(self, entity_type: Type):
+    def __init__(self, entity_type: Type["Entity"]):
         self._create_type = entity_type
 
     def __call__(self, *args, **kwargs) -> "Entity":
@@ -20,7 +20,7 @@ class EntityFactory(ABC):
         return self._create_type(*args, **kwargs)
 
     @property
-    def entity_type(self) -> Type:
+    def entity_type(self) -> Type["Entity"]:
         return self._create_type
 
 
@@ -40,10 +40,7 @@ class GrassFactory(EntityFactory):
 
 
 class HerbivoreFactory(EntityFactory):
-    _INIT_PARAMS = {
-        "speed": config.HERBIVORE.speed,
-        "health": config.HERBIVORE.health
-    }
+    _INIT_PARAMS = {"speed": config.HERBIVORE.speed, "health": config.HERBIVORE.health}
 
     def __init__(self, entity_type=Herbivore):
         super().__init__(entity_type)
@@ -53,7 +50,7 @@ class PredatorFactory(EntityFactory):
     _INIT_PARAMS = {
         "speed": config.PREDATOR.speed,
         "attack": config.PREDATOR.attack,
-        "health": config.PREDATOR.health
+        "health": config.PREDATOR.health,
     }
 
     def __init__(self, entity_type=Predator):

@@ -1,7 +1,13 @@
 import time
 from typing import List
 
-from src.actions import MoveEntitiesAction, SpawnEntitiesAction, RespawnEntitiesAction, RemoveDeadEntitiesAction
+from src.actions import (
+    Action,
+    MoveEntitiesAction,
+    RemoveDeadEntitiesAction,
+    RespawnEntitiesAction,
+    SpawnEntitiesAction,
+)
 from src.actions.factories import (
     GrassFactory,
     HerbivoreFactory,
@@ -9,9 +15,6 @@ from src.actions.factories import (
     RockFactory,
     TreeFactory,
 )
-
-
-from src.actions import Action
 from src.renders import Render
 from src.worlds import World
 
@@ -22,13 +25,12 @@ class Simulation:
         self._render = render
         self._move_counter = 0
         self._init_actions: List[Action] = [
-            # SpawnEntitiesAction(RockFactory, count=5),
-            # SpawnEntitiesAction(TreeFactory, count=5),
-            # SpawnEntitiesAction(GrassFactory(), count=3),
+            SpawnEntitiesAction(RockFactory(), count=5),
+            SpawnEntitiesAction(TreeFactory(), count=5),
             SpawnEntitiesAction(PredatorFactory(), count=2),
-            SpawnEntitiesAction(HerbivoreFactory(), count=2)
+            SpawnEntitiesAction(HerbivoreFactory(), count=2),
         ]
-        self._turn_actions = [
+        self._turn_actions: List[Action] = [
             MoveEntitiesAction(),
             RemoveDeadEntitiesAction(),
             RespawnEntitiesAction(GrassFactory(), min_count=5, spawn_count=1),
@@ -48,7 +50,7 @@ class Simulation:
     def start_simulation(self):
         self._initialize()
 
-        while self._move_counter < 40:
+        while self._move_counter < 10:
             self.next_turn()
             time.sleep(1)
 

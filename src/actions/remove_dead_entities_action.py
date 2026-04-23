@@ -1,6 +1,6 @@
-from .action import Action
-
 from src.worlds import World
+
+from .action import Action
 
 
 class RemoveDeadEntitiesAction(Action):

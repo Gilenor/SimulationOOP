@@ -1,9 +1,9 @@
 import random
 
+from src.worlds import World
+
 from .action import Action
 from .factories import EntityFactory
-
-from src.worlds import World
 
 
 class SpawnEntitiesAction(Action):
@@ -15,7 +15,7 @@ class SpawnEntitiesAction(Action):
     def execute(self, world: World):
         free_positions = world.get_empty_positions()
 
-        for i in range(self._count):
+        for _ in range(self._count):
             # WARNING: нужно ли выбрасывать исключение?
             if not free_positions:
                 return

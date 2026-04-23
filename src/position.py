@@ -6,7 +6,7 @@ class Position(object):
         self._x = x
         self._y = y
 
-    #def __del__(self):
+    # def __del__(self):
     #    print(f"{self} id: {id(self)} was deleted")
 
     def __str__(self) -> str:
@@ -15,11 +15,11 @@ class Position(object):
     def __repr__(self) -> str:
         return str(self)
 
-    def __add__(self, value: object) -> 'Position':
+    def __add__(self, value: object) -> "Position":
         if isinstance(value, Position):
-            return Position(self.x + value.x, self.y + value.y)
+            return Position(self._x + value.x, self._y + value.y)
         if isinstance(value, Tuple):
-            return Position(self.x + value[0], self.y + value[1])
+            return Position(self._x + value[0], self._y + value[1])
 
         return NotImplemented
 
@@ -37,7 +37,7 @@ class Position(object):
     def __iter__(self):
         return iter(self.get_coords())
 
-    def get_coords(self) -> Tuple:
+    def get_coords(self) -> Tuple[int, int]:
         return (self._x, self._y)
 
     @property

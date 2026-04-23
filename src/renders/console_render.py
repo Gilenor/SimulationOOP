@@ -1,14 +1,13 @@
 import os
 import platform
-
 from typing import List
 
-from .render import Render
-from .sprites import SpriteMap, ConsoleTextSprite
-
-from src.worlds import World
-from src.position import Position
 from src.entities.entity import Entity
+from src.position import Position
+from src.worlds import World
+
+from .render import Render
+from .sprites import ConsoleTextSprite, Sprite, SpriteMap
 
 
 class ConsoleRender(Render):
@@ -26,26 +25,26 @@ class ConsoleRender(Render):
         for line in view.data:
             print("     ", line)
 
-        #print(self._push_right(view.data, 5))
+        # print(self._push_right(view.data, 5))
         print()
 
     def clear(self):
         if platform.system() == "Windows":
-            os.system('cls')
+            os.system("cls")
         else:
-            os.system('clear')
+            os.system("clear")
 
 
 class ConsoleView:
     _EMPTY_SPRITE = ConsoleTextSprite("-")
 
-    def __init__(
-        self, sprite_map: SpriteMap, width: int, height: int, *dimensions: List
-    ):
+    def __init__(self, sprite_map: SpriteMap, width: int, height: int, *dimensions):
         self._sprite_map = sprite_map
-        # возможно в будущем проявятся какие-то ошибки 
+        # возможно в будущем проявятся какие-то ошибки
         # из-за использования _EMPTY_SPRITE в одном экземляре
-        self._sprites = [[self._EMPTY_SPRITE] * width for _ in range(height)]
+        self._sprites: List[List[Sprite]] = [
+            [self._EMPTY_SPRITE] * width for _ in range(height)
+        ]
 
     @property
     def data(self) -> List[str]:

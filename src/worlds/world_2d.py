@@ -1,9 +1,9 @@
-from typing import Dict, List, Tuple, Type, Optional
+from typing import Dict, List, Optional, Tuple, Type
+
+from src.entities.entity import Entity
+from src.position import Position
 
 from .world import World
-
-from src.position import Position
-from src.entities.entity import Entity
 
 
 class World2D(World):
@@ -33,7 +33,7 @@ class World2D(World):
         self.remove_entity(entity)
         self.add_entity(entity, new_pos)
 
-    def get_entities(self, entity_type: Optional[Type] = None) -> List[Entity]:
+    def get_entities(self, entity_type: Optional[Type[Entity]] = None) -> List[Entity]:
         entities = list(self._entities.values())
 
         if entity_type is None:
@@ -46,21 +46,23 @@ class World2D(World):
                 return pos
         # WARNING: возможно лучше бросать исключение
         raise ValueError("[get_entity_position]: Entity was not found in world!")
-        #return None
+        # return None
 
     def get_entity_at(self, position: Position) -> Entity:
         if position in self._entities:
             return self._entities[position]
         # WARNING: возможно лучше бросать исключение
-        raise ValueError(f"[get_entity_at]: Entity by position: ({position}) was not found in world!")
-        #return None
+        raise ValueError(
+            f"[get_entity_at]: Entity by position: ({position}) was not found in world!"
+        )
+        # return None
 
     def get_empty_positions(self) -> List[Position]:
         positions = [ceil for ceil in self._ceils() if ceil not in self._entities]
 
         return positions
 
-    def get_dimensions(self) -> Tuple:
+    def get_dimensions(self) -> Tuple[int, ...]:
         return (self._width, self._height)
 
     def is_free(self, position: Position) -> bool:
@@ -70,7 +72,11 @@ class World2D(World):
         return (0 <= position.x < self._width) and (0 <= position.y < self._height)
 
     def is_exist(self, entity: Entity) -> bool:
-        return self.get_entity_position(entity) is not None
+        try:
+            self.get_entity_position(entity)
+            return True
+        except ValueError:
+            return False
 
     # ---------- private ------------------------------------------------------
 

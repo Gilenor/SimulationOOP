@@ -1,17 +1,16 @@
 import random
-
 from typing import List, Tuple, Type
 
-from src.worlds import World
+from src.entities.entity import Entity
 from src.position import Position
-
+from src.worlds import World
 
 Path = List[Position]
 PathCeil = Position
 
 
-class PathFinder():
-    def __init__(self, targets: Tuple[Type]) -> None:
+class PathFinder:
+    def __init__(self, targets: Tuple[Type[Entity], ...]) -> None:
         self._targets = targets
 
     # простая реализация поиска в ширину
@@ -21,12 +20,7 @@ class PathFinder():
         visited = {start: start}
         vertex: Position
 
-        neighbors = [
-            (0, 1),   # Up
-            (1, 0),   # Right
-            (0, -1),  # Down
-            (-1, 0),  # Left
-        ]
+        neighbors = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # Down  # Right  # Up  # Left
 
         # WARNING: если стартовой позиции нет на карте, то путь не ищется
         #          в будущем возможны ошибки, если измениться работа с картой

@@ -1,14 +1,13 @@
 from types import SimpleNamespace
-from src.entities import Tree, Rock, Grass, Predator, Herbivore
-from src.utils.path_finder import PathCeil
+from typing import Dict, Type
 
+from src.entities import Entity, Grass, Herbivore, Predator, Rock, Tree
 
 # размеры мира
 WORLD_WIDTH = 30
 WORLD_HEIGHT = 20
 
-CONSOLE_TEXT_SPRITES = {
-    PathCeil: "*",  # добавил для теста, проверить выводимый путь
+CONSOLE_TEXT_SPRITES: Dict[Type[Entity], str] = {
     Tree: "T",
     Rock: "R",
     Grass: "G",

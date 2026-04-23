@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, List, Tuple, Type, Optional
+from typing import TYPE_CHECKING, List, Optional, Tuple, Type
 
-#from src.entities.interfaces.destroyable import destroyed_signal
+# from src.entities.interfaces.destroyable import destroyed_signal
 
 if TYPE_CHECKING:
     from src.entities.entity import Entity
@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 
 class World(ABC):
     # def __init__(self) -> None:
-        # Подписываемся на глобальный сигнал уничтожения entity
+    # Подписываемся на глобальный сигнал уничтожения entity
     #    print("Init World")
     #    destroyed_signal.connect(self.remove_entity)
 
@@ -27,7 +27,9 @@ class World(ABC):
         pass
 
     @abstractmethod
-    def get_entities(self, entity_type: Optional[Type] = None) -> List["Entity"]:
+    def get_entities(
+        self, entity_type: Optional[Type["Entity"]] = None
+    ) -> List["Entity"]:
         pass
 
     @abstractmethod
@@ -43,7 +45,7 @@ class World(ABC):
         pass
 
     @abstractmethod
-    def get_dimensions(self) -> Tuple:
+    def get_dimensions(self) -> Tuple[int, ...]:
         pass
 
     @abstractmethod

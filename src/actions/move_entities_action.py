@@ -1,15 +1,14 @@
 from typing import List
 
-from .action import Action
-
+from src.entities.movable import MovableEntity
 from src.worlds import World
-from src.entities.entity import Entity
-from src.entities.interfaces import Movable
+
+from .action import Action
 
 
 class MoveEntitiesAction(Action):
     def execute(self, world: World):
-        entities = world.get_entities(entity_type=Movable)
+        entities: List[MovableEntity] = world.get_entities(entity_type=MovableEntity)
 
         for entity in entities:
             if not entity.is_dead():

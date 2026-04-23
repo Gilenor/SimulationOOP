@@ -7,5 +7,5 @@ if TYPE_CHECKING:
 
 class Action(ABC):
     @abstractmethod
-    def execute(self, game_map: "World"):
+    def execute(self, world: "World"):
         pass

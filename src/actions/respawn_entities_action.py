@@ -1,9 +1,9 @@
 import random
 
+from src.worlds import World
+
 from .action import Action
 from .factories import EntityFactory
-
-from src.worlds import World
 
 
 class RespawnEntitiesAction(Action):
@@ -19,7 +19,7 @@ class RespawnEntitiesAction(Action):
         free_positions = world.get_empty_positions()
         spawn_count = int(entities_count < self._min_count) * self._spawn_count
 
-        for i in range(spawn_count):
+        for _ in range(spawn_count):
             # WARNING: нужно ли выбрасывать исключение?
             if not free_positions:
                 return
