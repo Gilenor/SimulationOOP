@@ -1,7 +1,7 @@
 import time
 from typing import List
 
-from src.actions import MoveEntitiesAction, SpawnEntitiesAction, RemoveDeadEntitiesAction
+from src.actions import MoveEntitiesAction, SpawnEntitiesAction, RespawnEntitiesAction, RemoveDeadEntitiesAction
 from src.actions.factories import (
     GrassFactory,
     HerbivoreFactory,
@@ -24,15 +24,16 @@ class Simulation:
         self._init_actions: List[Action] = [
             # SpawnEntitiesAction(RockFactory, count=5),
             # SpawnEntitiesAction(TreeFactory, count=5),
-            SpawnEntitiesAction(GrassFactory(), count=3),
+            # SpawnEntitiesAction(GrassFactory(), count=3),
             SpawnEntitiesAction(PredatorFactory(), count=2),
             SpawnEntitiesAction(HerbivoreFactory(), count=2)
         ]
         self._turn_actions = [
             MoveEntitiesAction(),
             RemoveDeadEntitiesAction(),
-            # RespawnAction(create grass, min_count=15, spawn_count=5),
-            # RespawnAction(create herbivore, min_count=3, spawn_count=2)
+            RespawnEntitiesAction(GrassFactory(), min_count=5, spawn_count=1),
+            RespawnEntitiesAction(PredatorFactory(), min_count=4, spawn_count=1),
+            RespawnEntitiesAction(HerbivoreFactory(), min_count=8, spawn_count=1),
         ]
 
     def next_turn(self):
@@ -47,7 +48,7 @@ class Simulation:
     def start_simulation(self):
         self._initialize()
 
-        while self._move_counter < 10:
+        while self._move_counter < 40:
             self.next_turn()
             time.sleep(1)
 
