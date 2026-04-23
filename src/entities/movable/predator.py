@@ -1,9 +1,8 @@
-from .creature import Creature
-
-from src.worlds import World
 from src.entities.entity import Entity
 from src.entities.movable import Herbivore
-from src.utils.path_finder import PathFinder
+from src.worlds import World
+
+from .creature import Creature
 
 
 class Predator(Creature):
@@ -21,4 +20,4 @@ class Predator(Creature):
             print(f"Error: {target} id not valid type target for Predator")
             return
 
-        target.hit(self._attack)
+        target.take_damage(self._attack)

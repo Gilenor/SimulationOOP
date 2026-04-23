@@ -1,8 +1,8 @@
-from .creature import Creature
-
-from src.worlds import World
-from src.entities.static import Grass
 from src.entities.entity import Entity
+from src.entities.static import Grass
+from src.worlds import World
+
+from .creature import Creature
 
 
 class Herbivore(Creature):
@@ -16,4 +16,7 @@ class Herbivore(Creature):
             print(f"Error: {target} id not valid type target for Herbivore")
             return
 
-        target.hit()
+        # WARNING: нужно подумать о систему урона для травы и о том
+        #          как определять насколько поглощение травы будет
+        #          восстанавливать здоровье или жизнь Herbivore
+        target.take_damage(1)

@@ -1,3 +1,4 @@
-from .herbivore import Herbivore
-from .predator import Predator
 from .creature import Creature
+from .herbivore import Herbivore
+from .movable_entity import MovableEntity
+from .predator import Predator

@@ -1,19 +1,21 @@
 from abc import abstractmethod
 from typing import Tuple, Type
 
-from src.worlds import World
-from src.position import Position
+from src.entities.destroyable_entity import DestroyableEntity
 from src.entities.entity import Entity
-from src.entities.interfaces import Movable
-from src.utils.path_finder import PathFinder, Path
+from src.utils.path_finder import Path, PathFinder
+from src.worlds import World
+
+from .movable_entity import MovableEntity
 
 
-class Creature(Entity, Movable):
-    _targets: Tuple[Type]
+class Creature(DestroyableEntity, MovableEntity):
+    _targets: Tuple[Type[Entity]]
 
     @abstractmethod
     def __init__(self, health: int, speed: int):
-        self._health = health
+        DestroyableEntity.__init__(self, health)
+
         self._speed = speed
         self._path_finder = PathFinder(self._targets)
 
@@ -22,7 +24,7 @@ class Creature(Entity, Movable):
             position = world.get_entity_position(self)
             path = self._path_finder.get_path_to_target(position, world)
 
-            #print(f"{str(self):<10}: {position}, target: {str(target):<10}, path to target: {path}")
+            # print(f"{str(self):<10}: {position}, target: {str(target):<10}, path to target: {path}")
 
             if len(path) == 1:
                 target = world.get_entity_at(path[-1])
@@ -50,5 +52,5 @@ class Creature(Entity, Movable):
 
     # переопределить в дочернем классе, для взамодействия с целью
     def interact_with_target(self, target: Entity, world: World):
-        """ часть шаблонного метода make_move отвечающая за взаимодействие с целью """
+        """часть шаблонного метода make_move отвечающая за взаимодействие с целью"""
         pass

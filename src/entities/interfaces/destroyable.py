@@ -1,21 +1,23 @@
-from blinker import signal
+# from blinker import signal
 
-destroyed_signal = signal('object-destroyed')
+# destroyed_signal = signal('object-destroyed')
 
 
-class Destroyable():
-    def __init__(self):
-        self._exist = True
-        print(f"{self} now is existing")
+class Destroyable:
+    def __init__(self, health: int):
+        self._health = health
+        # print(f"{self} now is existing")
 
-    def destroy(self):
-        if not self._exist:
+    """ def destroy(self):
+        if self.is_dead():
             return
 
         # Отправляем сигнал в «эфир»
         destroyed_signal.send(self)
-        self._exist = False
-        print(f"{self} id: {id(self)}, was destroyed")
+        print(f"{self} id: {id(self)}, was destroyed") """
 
-    def is_exist(self) -> bool:
-        return self._exist
+    def take_damage(self, damage: int):
+        self._health -= damage
+
+    def is_dead(self) -> bool:
+        return self._health <= 0

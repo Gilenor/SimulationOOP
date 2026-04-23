@@ -1,2 +1,2 @@
+from .destroyable import Destroyable
 from .movable import Movable
-# from .destroyable import Destroyable
