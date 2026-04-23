@@ -8,19 +8,22 @@ from src.entities.entity import Entity
 
 class World2D(World):
     def __init__(self, width: int, height: int):
+        super().__init__()
+
         self._width = width
         self._height = height
         self._entities: Dict[Position, Entity] = {}
 
     def add_entity(self, entity: Entity, position: Position):
-        if not self.is_exist(position):
-            raise ValueError("Position out of bounds")
+        if not self.is_valid(position):
+            raise ValueError(f"[add_entity]: Position: ({position}) out of bounds")
         if not self.is_free(position):
-            raise ValueError(f"Position: {position.get_coords()} was occupied")
+            raise ValueError(f"[add_entity]: Position: ({position}) was occupied")
 
         self._entities[position] = entity
 
     def remove_entity(self, entity: Entity):
+        # WARNING: нужно ли бросать исключение если entity не найдена?
         for pos, e in self._entities.items():
             if entity == e:
                 self._entities.pop(pos)
@@ -37,24 +40,23 @@ class World2D(World):
             return entities
         return [e for e in entities if isinstance(e, entity_type)]
 
-    def get_entity_position(self, entity: Entity) -> Optional[Position]:
+    def get_entity_position(self, entity: Entity) -> Position:
         for pos, e in self._entities.items():
-            if entity == e:
+            if entity is e:
                 return pos
         # WARNING: возможно лучше бросать исключение
-        # raise ValueError("Entity was not found in world!")
-        return None
+        raise ValueError("[get_entity_position]: Entity was not found in world!")
+        #return None
 
-    def get_entity_at(self, position: Position) -> Optional[Entity]:
+    def get_entity_at(self, position: Position) -> Entity:
         if position in self._entities:
             return self._entities[position]
         # WARNING: возможно лучше бросать исключение
-        # raise ValueError("Entity was not found in world!")
-        return None
+        raise ValueError(f"[get_entity_at]: Entity by position: ({position}) was not found in world!")
+        #return None
 
     def get_empty_positions(self) -> List[Position]:
-        positions = [ceil for ceil in self._ceils(
-        ) if ceil not in self._entities]
+        positions = [ceil for ceil in self._ceils() if ceil not in self._entities]
 
         return positions
 
@@ -64,8 +66,11 @@ class World2D(World):
     def is_free(self, position: Position) -> bool:
         return position not in self._entities
 
-    def is_exist(self, position: Position) -> bool:
+    def is_valid(self, position: Position) -> bool:
         return (0 <= position.x < self._width) and (0 <= position.y < self._height)
+
+    def is_exist(self, entity: Entity) -> bool:
+        return self.get_entity_position(entity) is not None
 
     # ---------- private ------------------------------------------------------
 

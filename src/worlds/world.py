@@ -1,12 +1,19 @@
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, List, Tuple, Type, Optional
 
+#from src.entities.interfaces.destroyable import destroyed_signal
+
 if TYPE_CHECKING:
     from src.entities.entity import Entity
     from src.position import Position
 
 
 class World(ABC):
+    # def __init__(self) -> None:
+        # Подписываемся на глобальный сигнал уничтожения entity
+    #    print("Init World")
+    #    destroyed_signal.connect(self.remove_entity)
+
     @abstractmethod
     def add_entity(self, entity: "Entity", position: "Position"):
         pass
@@ -24,11 +31,11 @@ class World(ABC):
         pass
 
     @abstractmethod
-    def get_entity_position(self, entity: "Entity") -> Optional["Position"]:
+    def get_entity_position(self, entity: "Entity") -> "Position":
         pass
 
     @abstractmethod
-    def get_entity_at(self, position: "Position") -> Optional["Entity"]:
+    def get_entity_at(self, position: "Position") -> "Entity":
         pass
 
     @abstractmethod
@@ -44,5 +51,9 @@ class World(ABC):
         pass
 
     @abstractmethod
-    def is_exist(self, position: "Position") -> bool:
+    def is_valid(self, position: "Position") -> bool:
+        pass
+
+    @abstractmethod
+    def is_exist(self, entity: "Entity") -> bool:
         pass
