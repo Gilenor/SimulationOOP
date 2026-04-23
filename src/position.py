@@ -6,6 +6,9 @@ class Position(object):
         self._x = x
         self._y = y
 
+    #def __del__(self):
+    #    print(f"{self} id: {id(self)} was deleted")
+
     def __str__(self) -> str:
         return f"(x: {self._x}, y: {self._y})"
 

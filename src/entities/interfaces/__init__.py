@@ -1,1 +1,2 @@
-from .movable_entity import Movable
+from .movable import Movable
+# from .destroyable import Destroyable

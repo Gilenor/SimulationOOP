@@ -23,9 +23,11 @@ class ConsoleRender(Render):
             position = world.get_entity_position(entity)
             view.add_entity_to_view(entity, position)
 
-        print(view)
+        for line in view.data:
+            print("     ", line)
+
+        #print(self._push_right(view.data, 5))
         print()
-        del view
 
     def clear(self):
         if platform.system() == "Windows":
@@ -35,7 +37,7 @@ class ConsoleRender(Render):
 
 
 class ConsoleView:
-    __EMPTY_SPRITE = ConsoleTextSprite("-")
+    _EMPTY_SPRITE = ConsoleTextSprite("-")
 
     def __init__(
         self, sprite_map: SpriteMap, width: int, height: int, *dimensions: List
@@ -43,13 +45,11 @@ class ConsoleView:
         self._sprite_map = sprite_map
         # возможно в будущем проявятся какие-то ошибки 
         # из-за использования _EMPTY_SPRITE в одном экземляре
-        self._sprites = [[self.__EMPTY_SPRITE] * width for _ in range(height)]
+        self._sprites = [[self._EMPTY_SPRITE] * width for _ in range(height)]
 
-    def __str__(self) -> str:
-        row_to_str = lambda row: "".join(map(str, row))
-        rows = [row_to_str(row) for row in self._sprites]
-
-        return "\n".join(rows)
+    @property
+    def data(self) -> List[str]:
+        return self._to_sting()
 
     def add_entity_to_view(self, entity: Entity, position: Position):
         # сущность будет просто добавляться на указанную позицию
@@ -59,3 +59,9 @@ class ConsoleView:
         # WARNING: пока все текстовы/консольные спрайты шириной в один символ
         #          но если это измениться то будет ошибка!!!
         self._sprites[y][x] = sprite
+
+    def _to_sting(self) -> List[str]:
+        row_to_str = lambda row: "".join(map(str, row))
+        rows = [row_to_str(row) for row in self._sprites]
+
+        return rows

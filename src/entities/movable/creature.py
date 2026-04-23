@@ -1,48 +1,54 @@
 from abc import abstractmethod
-from typing import List, Type
+from typing import Tuple, Type
 
 from src.worlds import World
 from src.position import Position
 from src.entities.entity import Entity
 from src.entities.interfaces import Movable
-from src.utils.path_finder import PathFinder, Path, Target
+from src.utils.path_finder import PathFinder, Path
 
 
 class Creature(Entity, Movable):
-    _targets: List[Type]
+    _targets: Tuple[Type]
 
     @abstractmethod
     def __init__(self, health: int, speed: int):
-        self.health = health
-        self.speed = speed
-        self.path_finder = PathFinder(self._targets)
-
-    @property
-    def path_finder(self) -> PathFinder:
-        return self._path_finder
-
-    @path_finder.setter
-    def path_finder(self, pf: PathFinder):
-        self._path_finder = pf
+        self._health = health
+        self._speed = speed
+        self._path_finder = PathFinder(self._targets)
 
     def make_move(self, world: World):
-        position = world.get_entity_position(self)
-        path, target = self.path_finder.get_path_to_target(position, world)
-        # print(f"{str(self):<10}: {position}, target: {str(target):<10}, path to target: {path}")
+        try:
+            position = world.get_entity_position(self)
+            path = self._path_finder.get_path_to_target(position, world)
 
-        if len(path) == 1:
-            # взаимодействуем с целью
-            self.interact_with_target(target, world)
-        else:
-            # идем к цели
-            self.move(path, world)
+            #print(f"{str(self):<10}: {position}, target: {str(target):<10}, path to target: {path}")
+
+            if len(path) == 1:
+                target = world.get_entity_at(path[-1])
+                # взаимодействуем с целью
+                self.interact_with_target(target, world)
+            else:
+                # идем к цели
+                self.move(path, world)
+
+        except Exception as e:
+            print(e)
 
     def move(self, path: Path, world: World):
-        if not Path:    return
+        if not path:
+            return
 
-        if world.is_free(path[0]):
-            world.move_entity_to(self, path[0])
+        # WARNING: если в полученном пути до цели какая-то клетка будет занята
+        #          то возможна ошибка консистентности карты, для чего
+        #          на всякий случай делаются проверки на доступность хода
+        #          возможно лучше ГАРАНТИРОВАННО получать только "чистый" путь
+        max_step = min(len(path) - 1, self._speed)
+        for step in range(max_step, -1, -1):
+            if world.is_free(path[step]):
+                world.move_entity_to(self, path[step])
 
     # переопределить в дочернем классе, для взамодействия с целью
-    def interact_with_target(self, target: Target, world: World):
+    def interact_with_target(self, target: Entity, world: World):
+        """ часть шаблонного метода make_move отвечающая за взаимодействие с целью """
         pass
