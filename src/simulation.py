@@ -1,4 +1,3 @@
-import time
 from typing import List
 
 from src.actions import (
@@ -48,17 +47,8 @@ class Simulation:
         self._render.render(self._world)
 
     def start_simulation(self):
-        self._initialize()
-
-        while self._move_counter < 10:
-            self.next_turn()
-            time.sleep(1)
+        for action in self._init_actions:
+            action.execute(self._world)
 
     def pause_simulation(self):
         pass
-
-    # ---------- private ------------------------------------------------------
-
-    def _initialize(self):
-        for action in self._init_actions:
-            action.execute(self._world)
