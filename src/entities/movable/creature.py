@@ -43,12 +43,8 @@ class Creature(DestroyableEntity, MovableEntity):
 
         # WARNING: если в полученном пути до цели какая-то клетка будет занята
         #          то возможна ошибка консистентности карты, для чего
-        #          на всякий случай делаются проверки на доступность хода
-        #          возможно лучше ГАРАНТИРОВАННО получать только "чистый" путь
-        max_step = min(len(path) - 1, self._speed)
-        for step in range(max_step, -1, -1):
-            if world.is_free(path[step]):
-                world.move_entity_to(self, path[step])
+        #          лучше ГАРАНТИРОВАННО получать только "чистый" путь
+        world.move_entity_to(self, path[0])
 
     # переопределить в дочернем классе, для взамодействия с целью
     def interact_with_target(self, target: Entity, world: World):
