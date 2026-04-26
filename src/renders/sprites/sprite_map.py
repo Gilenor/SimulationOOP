@@ -4,7 +4,8 @@ from typing import Dict, Type
 from config import CONSOLE_TEXT_SPRITES
 from src.entities.entity import Entity
 
-from .sprite import ConsoleTextSprite, Sprite
+from .sprite import Sprite
+from .console_sprite import ConsoleTextSprite
 
 
 class SpriteMap(ABC):
