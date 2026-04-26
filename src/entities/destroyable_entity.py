@@ -1,5 +1,5 @@
 from .entity import Entity
-from .interfaces import Destroyable
+from .interfaces.destroyable import Destroyable
 
 
 class DestroyableEntity(Entity, Destroyable):

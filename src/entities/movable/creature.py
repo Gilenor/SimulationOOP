@@ -4,7 +4,7 @@ from typing import Tuple, Type
 from src.entities.destroyable_entity import DestroyableEntity
 from src.entities.entity import Entity
 from src.utils.path_finder import Path, PathFinder
-from src.worlds import World
+from src.worlds.world import World
 
 from .movable_entity import MovableEntity
 
