@@ -1,9 +1,13 @@
-import random
+# import random
+
+# from functools import lru_cache, cache
 from typing import List, Tuple, Type
 
 from src.entities.entity import Entity
 from src.position import Position
-from src.worlds import World
+from src.worlds.world import World
+
+import config as conf
 
 Path = List[Position]
 PathCeil = Position
@@ -20,7 +24,7 @@ class PathFinder:
         visited = {start: start}
         vertex: Position
 
-        neighbors = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # Down  # Right  # Up  # Left
+        # neighbors = [(0, 1), (1, 0), (0, -1), (-1, 0)]  # Down  # Right  # Up  # Left
 
         # WARNING: если стартовой позиции нет на карте, то путь не ищется
         #          в будущем возможны ошибки, если измениться работа с картой
@@ -40,17 +44,19 @@ class PathFinder:
                     break
 
                 # если координата занята кем-то кроме нашей цели, "обходим" ее
-                # if vertex != start:
-                #    continue
+                if vertex != start:
+                    continue
 
             # перемешиваем для разнообразия получаемых путей
-            random.shuffle(neighbors)
+            neighbors = _get_neighbors(vertex)
+            # random.shuffle(neighbors)
 
             for neighbor in neighbors:
-                new_vertex = vertex + neighbor
+                new_vertex = neighbor  # vertex + neighbor
 
                 # пропускаем если позиция: не валидная или уже проверена
-                if (not world.is_valid(new_vertex)) or new_vertex in visited:
+                # if (not world.is_valid(new_vertex)) or new_vertex in visited:
+                if new_vertex in visited:
                     continue
 
                 # ключ - куда пришел, значение - откуда
@@ -68,3 +74,13 @@ class PathFinder:
 
         # ToDo: подумать, нужно ли в путь записывать стартовую позицию
         return path
+
+#@lru_cache
+#@cache
+def _get_neighbors(cell: Position) -> List[Position]:
+    # neighbors = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+
+    # return [cell + n for n in neighbors]
+    # if cell in conf.NEIGHBORS:
+    return conf.get_neighbors(cell)
+    # print("[WARNING]: У клетки нет соседей!!!")
